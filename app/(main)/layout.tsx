@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { Spinner } from "@/components/spinner";
-import { useConvexAuth } from "convex/react";
-import { redirect } from "next/navigation";
+import { Spinner } from '@/components/spinner';
+import { useConvexAuth } from 'convex/react';
+import { redirect } from 'next/navigation';
 
-import Navigation from "./_components/navigation";
+import Navigation from './_components/navigation';
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, isLoading } = useConvexAuth();
@@ -18,13 +18,13 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
   }
 
   if (!isAuthenticated) {
-    return redirect("/");
+    return redirect('/');
   }
 
   return (
     <div className="h-full flex dark:bg-[#1F1F1F] ">
       <Navigation />
-      <main className="flec-1 h-full overflow-y-hidden"> {children} </main>
+      <main className="flec-1 h-full w-full overflow-y-hidden">{children}</main>
     </div>
   );
 };
