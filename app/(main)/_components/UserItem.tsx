@@ -1,7 +1,7 @@
 'use client';
 
 import { SignOutButton, useUser } from '@clerk/clerk-react';
-import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
+// import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,60 +10,118 @@ import {
   DropdownMenuTrigger,
 } from '@radix-ui/react-dropdown-menu';
 import { ChevronsLeftRight } from 'lucide-react';
+import Image from 'next/image';
+import { useState } from 'react';
 
 export const UserItem = () => {
   const { user } = useUser();
-  console.log(user);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+    // <DropdownMenu>
+    //   <DropdownMenuTrigger asChild>
+    //     <div
+    //       role="button"
+    //       className="flex items-center text-sm p-3 w-full hover:bg-primary/5"
+    //     >
+    //       <div className="gap-x-2 flex items-center max-w-[150px]">
+    //         <Avater imageSorce={user?.imageUrl} />
+
+    //         <span className="text-start font-medium line-clamp-1">
+    //           {user?.fullName}&apos;s Jotion
+    //         </span>
+    //       </div>
+    //       <ChevronsLeftRight className="rotate-90 ml-2 text-muted-foreground h-4 w-4" />
+    //     </div>
+    //   </DropdownMenuTrigger>
+    //   <DropdownMenuContent
+    //     className="w-80"
+    //     align="start"
+    //     alignOffset={11}
+    //     forceMount
+    //   >
+    //     <div className="flex flex-col space-y-4 p-2">
+    //       <p className="text-xs font-medium leading-none text-muted-foreground">
+    //         {user?.emailAddresses[0].emailAddress}
+    //       </p>
+    //       <div className="flex items-center gap-x-2">
+    //         <div className="rounded-md bg-secondary p-1">
+    //           <Avater imageSorce={user?.imageUrl} />
+    //         </div>
+    //         <div className="space-y-1">
+    //           <p className="text-sm line-clamp-1">
+    //             {user?.fullName}&apos;s Motion
+    //           </p>
+    //         </div>
+    //       </div>
+    //     </div>
+    //     <DropdownMenuSeparator />
+    //     <DropdownMenuItem
+    //       asChild
+    //       className="w-full cursor-pointer text-muted-foreground"
+    //     >
+    //       <SignOutButton>Log out</SignOutButton>
+    //     </DropdownMenuItem>
+    //   </DropdownMenuContent>
+    // </DropdownMenu>
+    // New Versition
+    <div>
+      <div onClick={() => setIsOpen(!isOpen)}>
         <div
           role="button"
           className="flex items-center text-sm p-3 w-full hover:bg-primary/5"
         >
           <div className="gap-x-2 flex items-center max-w-[150px]">
-            <Avatar className="h-5 w-5">
-              <AvatarImage src={user?.imageUrl} />
-            </Avatar>
+            <Avater imageSorce={user?.imageUrl} />
+
             <span className="text-start font-medium line-clamp-1">
               {user?.fullName}&apos;s Jotion
             </span>
           </div>
           <ChevronsLeftRight className="rotate-90 ml-2 text-muted-foreground h-4 w-4" />
         </div>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
-        className="w-80"
-        align="start"
-        alignOffset={11}
-        forceMount
-      >
-        <div className="flex flex-col space-y-4 p-2">
-          <p className="text-xs font-medium leading-none text-muted-foreground">
-            {user?.emailAddresses[0].emailAddress}
-          </p>
-          <div className="flex items-center gap-x-2">
-            <div className="rounded-md bg-secondary p-1">
-              <Avatar className="h-8 w-8">
-                <AvatarImage src={user?.imageUrl} />
-              </Avatar>
+      </div>
+
+      {/* DropDown 😐 */}
+      {isOpen && (
+        <div className=" bg-[#fff] absolute w-full ">
+          <div className="flex flex-col space-y-4 p-2">
+            <p className="text-xs font-medium leading-none text-muted-foreground">
+              {user?.emailAddresses[0].emailAddress}
+            </p>
+            <div className="flex items-center gap-x-2">
+              <div className="rounded-md bg-secondary p-1">
+                <Avater imageSorce={user?.imageUrl} />
+              </div>
+              <div className="space-y-1">
+                <p className="text-sm line-clamp-1">
+                  {user?.fullName}&apos;s Motion
+                </p>
+              </div>
             </div>
-            <div className="space-y-1">
-              <p className="text-sm line-clamp-1">
-                {user?.fullName}&apos;s Jotion
-              </p>
+          </div>
+
+          <div className="w-full flex justify-center cursor-pointer text-muted-foreground items-center pb-2 ">
+            <div className="bg-primary text-primary-foreground px-2 py-1 rounded-lg hover:bg-primary/90 ">
+              <SignOutButton>Log out</SignOutButton>
             </div>
           </div>
         </div>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem
-          asChild
-          className="w-full cursor-pointer text-muted-foreground"
-        >
-          <SignOutButton>Log out</SignOutButton>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+      )}
+    </div>
+  );
+};
+
+const Avater = ({ imageSorce }: any) => {
+  return (
+    <>
+      <Image
+        className="rounded-3xl"
+        width={20}
+        height={20}
+        src={imageSorce}
+        alt="avater"
+      />
+    </>
   );
 };
